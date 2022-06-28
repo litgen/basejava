@@ -4,23 +4,19 @@ import ru.javawebinar.javabase.model.Resume;
 
 import java.util.Arrays;
 
-public class SortedArrayStorage extends AbstractArrayStorage{
-
-
+public class SortedArrayStorage extends AbstractArrayStorage {
   @Override
-  public void save(Resume r) {
-
+  protected void addResume(Resume r, int i) {
+    i = -i - 1;
+    ++size;
+    System.arraycopy(storage, i, storage, i + 1, size());
+    storage[i] = r;
   }
 
   @Override
-  public void delete(String uuid) {
-    int index = getIndex(uuid);
-    if (index == -1) {
-      System.out.println("Resume " + uuid + " not exist");
-    } else {
-      --size;
-      System.arraycopy(storage, index + 1, storage, index, size());
-    }
+  protected void rmResume(int i) {
+    --size;
+    System.arraycopy(storage, i + 1, storage, i, size());
   }
 
   @Override

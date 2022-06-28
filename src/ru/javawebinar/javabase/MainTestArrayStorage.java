@@ -2,6 +2,7 @@ package ru.javawebinar.javabase;
 
 import ru.javawebinar.javabase.model.Resume;
 import ru.javawebinar.javabase.storage.ArrayStorage;
+import ru.javawebinar.javabase.storage.SortedArrayStorage;
 import ru.javawebinar.javabase.storage.Storage;
 
 public class MainTestArrayStorage {
@@ -18,12 +19,18 @@ public class MainTestArrayStorage {
         r4.setUuid("uuid4");
         Resume r5 = new Resume();
         r5.setUuid("uuid5");
+        Resume r6 = new Resume();
+        r6.setUuid("uuid6");
+        Resume r7 = new Resume();
+        r7.setUuid("uuid7");
 
-        ARRAY_STORAGE.save(r1);
+        ARRAY_STORAGE.save(r6);
         ARRAY_STORAGE.save(r2);
+        ARRAY_STORAGE.save(r5);
+        ARRAY_STORAGE.save(r7);
+        ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r4);
-        ARRAY_STORAGE.save(r5);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
@@ -33,7 +40,7 @@ public class MainTestArrayStorage {
         printAll();
         ARRAY_STORAGE.delete(r4.getUuid());
         printAll();
-        ARRAY_STORAGE.delete(r5.getUuid());
+        ARRAY_STORAGE.delete(r7.getUuid());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
