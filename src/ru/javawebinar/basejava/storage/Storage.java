@@ -1,6 +1,6 @@
-package ru.javawebinar.javabase.storage;
+package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.javabase.model.Resume;
+import ru.javawebinar.basejava.model.Resume;
 
 public interface Storage {
 

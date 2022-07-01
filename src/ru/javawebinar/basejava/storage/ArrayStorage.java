@@ -1,19 +1,17 @@
-package ru.javawebinar.javabase.storage;
+package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.javabase.model.Resume;
+import ru.javawebinar.basejava.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
+
     @Override
-    protected void addResume(Resume r, int i) {
-        storage[size] = r;
-        size++;
+    protected void fillDeletedElement(int index) {
+        storage[index] = storage[size - 1];
     }
 
     @Override
-    protected void rmResume(int i) {
-        storage[i] = storage[size - 1];
-        storage[size - 1] = null;
-        size--;
+    protected void insertElement(Resume r, int index) {
+        storage[size] = r;
     }
 
     @Override
