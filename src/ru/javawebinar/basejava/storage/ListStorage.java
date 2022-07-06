@@ -1,66 +1,60 @@
 package ru.javawebinar.basejava.storage;
 
-import java.util.ArrayList;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListStorage extends AbstractStorage {
-  ArrayList<Resume> storage = new ArrayList<>();
+  private final List<Resume> list = new ArrayList<>();
 
   @Override
-  public void clear() {
-    storage.clear();
-    size = 0;
-  }
-
-  @Override
-  public Resume[] getAll() {
-    return storage.toArray(new Resume[0]);
-  }
-
-  private int getIndex(String uuid) {
-    Resume[] arr = getAll();
-    for (int i = 0; i < arr.length; i++) {
-      if (uuid.equals(arr[i].getUuid())) return i;
-    }
-    return -1;
-  }
-
-  @Override
-  protected boolean doUpdateIfPossible(Resume r) {
-    String uuid = r.getUuid();
-    int index = getIndex(uuid);
-    if (index > -1) {
-      storage.set(index, r);
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  protected boolean doSaveIfPossible(Resume r) {
-    if (!storage.contains(r)) {
-      storage.add(r);
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  protected Resume doGetIfPossible(String uuid) {
-    int index = getIndex(uuid);
-    if (index > -1) {
-      return storage.get(index);
+  protected Integer getSearchKey(String uuid) {
+    for (int i = 0; i < list.size(); i++) {
+      if (list.get(i).getUuid().equals(uuid)) {
+        return i;
+      }
     }
     return null;
   }
 
   @Override
-  protected boolean doRemoveIfPossible(String uuid) {
-    int index = getIndex(uuid);
-    boolean existValidator = index > -1;
-    if (existValidator) {
-      storage.remove(index);
-    }
-    return existValidator;
+  protected boolean isExist(Object searchKey) {
+    return searchKey != null;
+  }
+
+  @Override
+  protected void doUpdate(Resume r, Object searchKey) {
+    list.set((Integer) searchKey, r);
+  }
+
+  @Override
+  protected void doSave(Resume r, Object searchKey) {
+    list.add(r);
+  }
+
+  @Override
+  protected Resume doGet(Object searchKey) {
+    return list.get((Integer) searchKey);
+  }
+
+  @Override
+  protected void doDelete(Object searchKey) {
+    list.remove(((Integer) searchKey).intValue());
+  }
+
+  @Override
+  public void clear() {
+    list.clear();
+  }
+
+  @Override
+  public Resume[] getAll() {
+    return list.toArray(new Resume[0]);
+  }
+
+  @Override
+  public int size() {
+    return list.size();
   }
 }
