@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
@@ -44,13 +46,13 @@ public class ListStorage extends AbstractStorage {
   }
 
   @Override
-  public void clear() {
-    list.clear();
+  protected Resume[] createCloneArr() {
+    return list.toArray(new Resume[0]);
   }
 
   @Override
-  public Resume[] getAll() {
-    return list.toArray(new Resume[0]);
+  public void clear() {
+    list.clear();
   }
 
   @Override

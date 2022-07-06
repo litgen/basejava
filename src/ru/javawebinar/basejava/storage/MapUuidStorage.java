@@ -1,13 +1,14 @@
 package ru.javawebinar.basejava.storage;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import ru.javawebinar.basejava.model.Resume;
 
 public class MapUuidStorage extends AbstractStorage {
   Map<String, Resume> storage = new HashMap<>();
 
-  @Override
   public int size() {
     return storage.size();
   }
@@ -18,7 +19,7 @@ public class MapUuidStorage extends AbstractStorage {
   }
 
   @Override
-  public Resume[] getAll() {
+  protected Resume[] createCloneArr() {
     return storage.values().toArray(new Resume[0]);
   }
 
