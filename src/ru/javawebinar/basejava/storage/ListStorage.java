@@ -1,13 +1,10 @@
 package ru.javawebinar.basejava.storage;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import ru.javawebinar.basejava.model.Resume;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
   private final List<Resume> list = new ArrayList<>();
 
   @Override
@@ -21,38 +18,38 @@ public class ListStorage extends AbstractStorage {
   }
 
   @Override
-  protected boolean isExist(Object searchKey) {
+  protected boolean isExist(Integer searchKey) {
     return searchKey != null;
   }
 
   @Override
-  protected void doUpdate(Resume r, Object searchKey) {
-    list.set((Integer) searchKey, r);
+  protected void doUpdate(Resume r, Integer searchKey) {
+    list.set(searchKey, r);
   }
 
   @Override
-  protected void doSave(Resume r, Object searchKey) {
+  protected void doSave(Resume r, Integer searchKey) {
     list.add(r);
   }
 
   @Override
-  protected Resume doGet(Object searchKey) {
-    return list.get((Integer) searchKey);
+  protected Resume doGet(Integer searchKey) {
+    return list.get(searchKey);
   }
 
   @Override
-  protected void doDelete(Object searchKey) {
-    list.remove(((Integer) searchKey).intValue());
-  }
-
-  @Override
-  protected Resume[] createCloneArr() {
-    return list.toArray(new Resume[0]);
+  protected void doDelete(Integer searchKey) {
+    list.remove(searchKey.intValue());
   }
 
   @Override
   public void clear() {
     list.clear();
+  }
+
+  @Override
+  public List<Resume> doCopyAll() {
+    return new ArrayList<>(list);
   }
 
   @Override

@@ -1,55 +1,54 @@
 package ru.javawebinar.basejava.storage;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import ru.javawebinar.basejava.model.Resume;
 
-public class MapUuidStorage extends AbstractStorage {
-  Map<String, Resume> storage = new HashMap<>();
+import java.util.*;
 
-  public int size() {
-    return storage.size();
-  }
+public class MapUuidStorage extends AbstractStorage<String> {
+  private final Map<String, Resume> map = new HashMap<>();
 
   @Override
-  public void clear() {
-    storage.clear();
-  }
-
-  @Override
-  protected Resume[] createCloneArr() {
-    return storage.values().toArray(new Resume[0]);
-  }
-
-  @Override
-  protected Object getSearchKey(String uuid) {
+  protected String getSearchKey(String uuid) {
     return uuid;
   }
 
   @Override
-  protected void doUpdate(Resume r, Object searchKey) {
-    storage.put(r.getUuid(), r);
+  protected void doUpdate(Resume r, String uuid) {
+    map.put(uuid, r);
   }
 
   @Override
-  protected void doSave(Resume r, Object searchKey) {
-    storage.put((String) searchKey, r);
+  protected boolean isExist(String uuid) {
+    return map.containsKey(uuid);
   }
 
   @Override
-  protected Resume doGet(Object searchKey) {
-    return storage.get((String) searchKey);
+  protected void doSave(Resume r, String uuid) {
+    map.put(uuid, r);
   }
 
   @Override
-  protected void doDelete(Object searchKey) {
-    storage.remove((String) searchKey);
+  protected Resume doGet(String uuid) {
+    return map.get(uuid);
   }
 
   @Override
-  protected boolean isExist(Object searchKey) {
-    return storage.containsKey((String) searchKey);
+  protected void doDelete(String uuid) {
+    map.remove(uuid);
+  }
+
+  @Override
+  public void clear() {
+    map.clear();
+  }
+
+  @Override
+  public List<Resume> doCopyAll() {
+    return new ArrayList<>(map.values());
+  }
+
+  @Override
+  public int size() {
+    return map.size();
   }
 }
