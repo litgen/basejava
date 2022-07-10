@@ -1,6 +1,6 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.model.SectionType;
+import java.util.EnumMap;
 
 public class TestSingleton {
   private static TestSingleton instance;
@@ -16,16 +16,23 @@ public class TestSingleton {
   }
 
   public static void main(String[] args) {
-    TestSingleton.getInstance().toString();
-    Singleton instance = Singleton.valueOf("INSTANCE");
-    System.out.println(instance.ordinal());
+    EnumMap<Color, Integer> colors = new EnumMap<>(Color.class);
 
-    for (SectionType type : SectionType.values()) {
-      System.out.println(type.getTitle());
-    }
+    colors.put(Color.RED, 1);
+    colors.put(Color.GREEN, 2);
+    colors.put(Color.BLUE, 3);
+    colors.put(Color.WHITE, 4);
+
+    colors.replace(Color.RED, 11);
+    colors.replace(Color.GREEN, 2, 12);
+
+    System.out.println(colors);
   }
 
-  public enum Singleton {
-    INSTANCE
+  enum Color {
+    RED,
+    GREEN,
+    BLUE,
+    WHITE
   }
 }
