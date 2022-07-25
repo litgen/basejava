@@ -2,16 +2,13 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.ArrayStorage;
-import ru.javawebinar.basejava.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import ru.javawebinar.basejava.storage.Storage;
 
-/**
- * Test for ru.javawebinar.basejava.storage.ArrayStorage
- */
 public class MainArray {
     private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
