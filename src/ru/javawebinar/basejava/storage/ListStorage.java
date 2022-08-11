@@ -1,66 +1,60 @@
 package ru.javawebinar.basejava.storage;
 
-import java.util.ArrayList;
 import ru.javawebinar.basejava.model.Resume;
 
-public class ListStorage extends AbstractStorage {
-  ArrayList<Resume> storage = new ArrayList<>();
+import java.util.ArrayList;
+import java.util.List;
 
-  @Override
-  public void clear() {
-    storage.clear();
-    size = 0;
-  }
+public class ListStorage extends AbstractStorage<Integer> {
+    private List<Resume> list = new ArrayList<>();
 
-  @Override
-  public Resume[] getAll() {
-    return storage.toArray(new Resume[0]);
-  }
-
-  private int getIndex(String uuid) {
-    Resume[] arr = getAll();
-    for (int i = 0; i < arr.length; i++) {
-      if (uuid.equals(arr[i].getUuid())) return i;
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
     }
-    return -1;
-  }
 
-  @Override
-  protected boolean doUpdateIfPossible(Resume r) {
-    String uuid = r.getUuid();
-    int index = getIndex(uuid);
-    if (index > -1) {
-      storage.set(index, r);
-      return true;
+    @Override
+    protected boolean isExist(Integer searchKey) {
+        return searchKey != null;
     }
-    return false;
-  }
 
-  @Override
-  protected boolean doSaveIfPossible(Resume r) {
-    if (!storage.contains(r)) {
-      storage.add(r);
-      return true;
+    @Override
+    protected void doUpdate(Resume r, Integer searchKey) {
+        list.set(searchKey, r);
     }
-    return false;
-  }
 
-  @Override
-  protected Resume doGetIfPossible(String uuid) {
-    int index = getIndex(uuid);
-    if (index > -1) {
-      return storage.get(index);
+    @Override
+    protected void doSave(Resume r, Integer searchKey) {
+        list.add(r);
     }
-    return null;
-  }
 
-  @Override
-  protected boolean doRemoveIfPossible(String uuid) {
-    int index = getIndex(uuid);
-    boolean existValidator = index > -1;
-    if (existValidator) {
-      storage.remove(index);
+    @Override
+    protected Resume doGet(Integer searchKey) {
+        return list.get(searchKey);
     }
-    return existValidator;
-  }
+
+    @Override
+    protected void doDelete(Integer searchKey) {
+        list.remove(searchKey.intValue());
+    }
+
+    @Override
+    public void clear() {
+        list.clear();
+    }
+
+    @Override
+    public List<Resume> doCopyAll() {
+        return new ArrayList<>(list);
+    }
+
+    @Override
+    public int size() {
+        return list.size();
+    }
 }
