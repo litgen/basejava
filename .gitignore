@@ -1,5 +1,7 @@
 .idea
 out
+storage
+lesson
 *.iml
 log
 
