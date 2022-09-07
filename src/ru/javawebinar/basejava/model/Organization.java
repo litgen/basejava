@@ -20,8 +20,6 @@ import static ru.javawebinar.basejava.util.DateUtil.of;
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
-
     private Link homePage;
     private List<Position> positions = new ArrayList<>();
 
@@ -51,7 +49,7 @@ public class Organization implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
         return Objects.equals(homePage, that.homePage) &&
-            Objects.equals(positions, that.positions);
+                Objects.equals(positions, that.positions);
     }
 
     @Override
@@ -63,10 +61,9 @@ public class Organization implements Serializable {
     public String toString() {
         return "Organization(" + homePage + "," + positions + ')';
     }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
-        public static final Position EMPTY = new Position();
-
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -117,9 +114,9 @@ public class Organization implements Serializable {
             if (o == null || getClass() != o.getClass()) return false;
             Position position = (Position) o;
             return Objects.equals(startDate, position.startDate) &&
-                Objects.equals(endDate, position.endDate) &&
-                Objects.equals(title, position.title) &&
-                Objects.equals(description, position.description);
+                    Objects.equals(endDate, position.endDate) &&
+                    Objects.equals(title, position.title) &&
+                    Objects.equals(description, position.description);
         }
 
         @Override

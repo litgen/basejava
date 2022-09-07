@@ -11,9 +11,9 @@ public class XmlParser {
     private final Marshaller marshaller;
     private final Unmarshaller unmarshaller;
 
-    public XmlParser(Class... classesToBeFound) {
+    public XmlParser(Class... classesToBeBound) {
         try {
-            JAXBContext ctx = JAXBContext.newInstance(classesToBeFound);
+            JAXBContext ctx = JAXBContext.newInstance(classesToBeBound);
 
             marshaller = ctx.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
